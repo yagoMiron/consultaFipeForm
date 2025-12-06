@@ -1,0 +1,106 @@
+.form {
+  display: flex;
+  min-width: calc(30vw + 100px);
+  max-width: 95vw;
+  box-sizing: border-box;
+  flex-direction: column;
+  background-color: white;
+  color: #0f0f0f;
+  padding: 20px 40px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.form h2 {
+  font-size: 28px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.texto {
+  background-color: white;
+  color: #0f0f0f;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  max-height: 70px;
+  overflow: hidden;
+  transition: all 0.5s linear;
+}
+.inputBox label {
+  font-weight: 600;
+  font-size: 18px;
+}
+.separador {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.checkboxContainer {
+  display: flex;
+  text-align: start;
+  margin-bottom: 4px;
+}
+
+.fadeOut {
+  opacity: 0;
+  max-height: 0px;
+  margin-bottom: 0px;
+  pointer-events: none;
+}
+
+/* aparecendo */
+.fadeIn {
+  opacity: 1;
+  max-height: 70px;
+  margin-bottom: 6px;
+}
+
+.search_btn {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.8em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 2.4px 2.4px 3.2px;
+  background-color: #0f0f0f;
+  color: #f0f0f0;
+  background-image: url(./assets/search.svg);
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: calc(100% - 12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+}
+.search_btn:hover {
+  background-color: #424242;
+  padding: 1em 1.2em;
+  transition: padding 100ms linear;
+}
+.search_btn:disabled {
+  background-color: #d0d0d0;
+  padding: 0.8em 1.2em;
+  cursor: auto;
+}
+
+.block {
+  flex: 1;
+  padding: 0px 20px;
+  font-size: 18px;
+}
