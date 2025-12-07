@@ -1,6 +1,6 @@
 .customModal {
   border-radius: 16px;
-  width: 75%;
+  width: calc(70% + 50px);
   max-width: none;
   color: #000;
   padding: 0px;
