@@ -125,9 +125,9 @@ function App() {
           hidden={!semPlaca}
         >
           <option value="">-</option>
-          <option value="1">Motos</option>
-          <option value="2">Carros</option>
-          <option value="3">Caminhão</option>
+          <option value="motorcycles">Motos</option>
+          <option value="cars">Carros</option>
+          <option value="trucks">Caminhão</option>
         </SelectInput>
 
         <SelectInput
