@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { VeicleData } from "../types/VeicleData";
+import { Fields } from "../enum/Fields";
 
 const BITRIX_WEBHOOK_URL =
   "https://loma.bitrix24.com.br/rest/13/fjmtf3sgm16jyynl";
@@ -9,14 +10,13 @@ const sendData = async (data: VeicleData, cliente: string): Promise<void> => {
     await axios.post(`${BITRIX_WEBHOOK_URL}/crm.deal.add`, {
       fields: {
         TITLE: `Cotação | ${cliente}`,
-        UF_CRM_CLIENTE: cliente,
-        UF_CRM_COD_FIPE: data.codeFipe,
-        UF_CRM_FIPE_VALOR: data.price,
-        UF_CRM_VEIC_TIPO: data.vehicleType,
-        UF_CRM_VEIC_MARCA: data.brand,
-        UF_CRM_VEIC_MODELO: data.model,
-        UF_CRM_VEIC_ANO: data.modelYear,
-        UF_CRM_FIPE_REF: data.referenceMonth,
+        [Fields.CLIENTE]: cliente,
+        [Fields.FIPE_VALOR]: data.price,
+        [Fields.VEIC_TIPO]: data.vehicleType,
+        [Fields.VEIC_MARCA]: data.brand,
+        [Fields.VEIC_MODELO]: data.model,
+        [Fields.VEIC_ANO]: data.modelYear,
+        [Fields.FIPE_REF]: data.referenceMonth,
       },
     });
   } catch (error: any) {
