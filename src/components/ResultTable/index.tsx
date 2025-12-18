@@ -1,5 +1,6 @@
 import styles from "./styles.module.css";
 import type { VeicleData } from "../../types/VeicleData";
+import { NomeVeiculo } from "../../enum/NomeVeiculo";
 type Props = {
   veicleData: VeicleData;
   covered?: boolean;
@@ -7,22 +8,10 @@ type Props = {
 };
 
 const ResultTable = ({ veicleData, covered, setActualPage }: Props) => {
-  const nomeDoVeiculo = (codigo: number) => {
-    switch (codigo) {
-      case 1:
-        return "Carro";
-      case 2:
-        return "Moto";
-      case 3:
-        return "Caminhão";
-      default:
-        return "";
-    }
-  };
   const rows = [
     { label: "Código FIPE", value: veicleData.codeFipe },
     { label: "Preço", value: veicleData.price },
-    { label: "Tipo de veículo", value: nomeDoVeiculo(veicleData.vehicleType) },
+    { label: "Tipo de veículo", value: NomeVeiculo[veicleData.vehicleType+1] },
     { label: "Marca", value: veicleData.brand },
     { label: "Modelo", value: veicleData.model },
     { label: "Ano do modelo", value: veicleData.modelYear },

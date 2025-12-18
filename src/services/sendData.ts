@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { VeicleData } from "../types/VeicleData";
 import { Fields } from "../enum/Fields";
+import { NomeVeiculo } from "../enum/NomeVeiculo";
 
 const BITRIX_WEBHOOK_URL =
   "https://loma.bitrix24.com.br/rest/13/fjmtf3sgm16jyynl";
@@ -12,7 +13,8 @@ const sendData = async (data: VeicleData, cliente: string): Promise<void> => {
         TITLE: `Cotação | ${cliente}`,
         [Fields.CLIENTE]: cliente,
         [Fields.FIPE_VALOR]: data.price,
-        [Fields.VEIC_TIPO]: data.vehicleType,
+        [Fields.COD_FIPE]: data.codeFipe,
+        [Fields.VEIC_TIPO]: `${NomeVeiculo[data.vehicleType+1]}` ,
         [Fields.VEIC_MARCA]: data.brand,
         [Fields.VEIC_MODELO]: data.model,
         [Fields.VEIC_ANO]: data.modelYear,
