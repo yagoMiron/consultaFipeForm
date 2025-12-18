@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { VeicleData } from "../../types/VeicleData";
 import styles from "./styles.module.css";
 import sendData from "../../services/sendData";
@@ -14,12 +14,15 @@ const SendForm = ({ veicleData }: Props) => {
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
   const [deuError, setDeuError] = useState(false);
-  if (!userId || !token) {
-    setDeuError(true);
-  }
-
   const [activeContainer, setActiveContainer] = useState(1);
   const [cliente, setCliente] = useState("");
+  useEffect(()=> {
+    if (!userId || !token) {
+      setDeuError(true)
+      console.log("Id do usuário ou token não encontrado");
+      
+    }
+  },[])
   return (
     <form className={styles.form}>
       <div
