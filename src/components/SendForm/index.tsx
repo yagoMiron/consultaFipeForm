@@ -3,12 +3,21 @@ import type { VeicleData } from "../../types/VeicleData";
 import styles from "./styles.module.css";
 import sendData from "../../services/sendData";
 import success from "../../assets/success.svg";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
   veicleData: VeicleData;
 };
 
 const SendForm = ({ veicleData }: Props) => {
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
+  const token = searchParams.get("token");
+  const [deuError, setDeuError] = useState(false);
+  if (!userId || !token) {
+    setDeuError(true);
+  }
+
   const [activeContainer, setActiveContainer] = useState(1);
   const [cliente, setCliente] = useState("");
   return (
@@ -32,14 +41,18 @@ const SendForm = ({ veicleData }: Props) => {
             placeholder="Cliente"
           />
         </div>
+        <span className={styles.errorMessage}>
+          Opa, acesse o link da aplicação via dashboard bitrix ou inclua o ID de
+          usuário e token na URL
+        </span>
         <hr className={styles.separador} />
         <button
           className={`${styles.btn} ${styles.send_btn}`}
-          disabled={!(cliente && veicleData.codeFipe)}
+          disabled={!(cliente && veicleData.codeFipe && !deuError)}
           onClick={(e) => {
             e.preventDefault();
-            if (cliente) {
-              sendData(veicleData, cliente);
+            if (cliente && userId && token) {
+              sendData(veicleData, cliente, userId, token);
               setActiveContainer(2);
             }
           }}
@@ -58,7 +71,6 @@ const SendForm = ({ veicleData }: Props) => {
           <hr className={styles.separador} />
           <button
             className={`${styles.btn} ${styles.return_btn}`}
-            disabled={!(cliente && veicleData.codeFipe)}
             onClick={(e) => {
               e.preventDefault();
               setActiveContainer(1);
