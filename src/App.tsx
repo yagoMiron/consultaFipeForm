@@ -8,6 +8,7 @@ import type { VeicleData } from "./types/VeicleData";
 import ResultTable from "./components/ResultTable";
 import loma from "./assets/loma-logo.png";
 import SendForm from "./components/SendForm";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const [actualPage, setActualPage] = useState(1);
@@ -23,7 +24,7 @@ function App() {
     fuelAcronym: "",
   });
   return (
-    <div className={`${styles.section} ${actualPage === 1 && styles.gap_0}`}>
+    <div className={`${styles.section} ${actualPage !== 2 && styles.gap_0}`}>
       <div className={styles.container}>
         <img src={car_tag} alt="carro fipe" className={styles.logo} />
         <div className={styles.wrapper}>
@@ -37,10 +38,14 @@ function App() {
             covered={actualPage !== 2}
             setActualPage={setActualPage}
           />
+          <ErrorMessage
+            setActualPage={setActualPage}
+            covered={actualPage !== 3}
+          />
         </div>
       </div>
       <div
-        className={`${styles.container} ${actualPage === 1 && styles.hidden}`}
+        className={`${styles.container} ${actualPage !== 2 && styles.hidden}`}
       >
         <img src={loma} alt="loma logo" className={styles.logo} />
         <div className={styles.wrapper}>

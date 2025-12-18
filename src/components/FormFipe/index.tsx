@@ -170,6 +170,8 @@ function FormFipe({ setVeicleData, covered, setActualPage }: Props) {
                 console.log(error);
               });
             setActualPage(2);
+          } else {
+            setActualPage(3);
           }
         }}
       >
