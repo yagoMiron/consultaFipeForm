@@ -118,3 +118,22 @@
   background-color: #4cbbb6;
   border-radius: 50%;
 }
+.addBtn {
+  background-color: white;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addBtn img {
+  width: 32px;
+  height: 32px;
+  transition: all 0.5s ease;
+}
+.addBtn img:hover {
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+}

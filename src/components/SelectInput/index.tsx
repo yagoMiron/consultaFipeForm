@@ -5,29 +5,40 @@ type Props = {
   title: string;
   value: string;
   setter?: React.Dispatch<React.SetStateAction<string>>;
-  hidden: boolean;
+  hidden?: boolean;
+  addButton?: ReactElement;
   children: ReactElement;
 };
 
-const SelectInput = ({ title, value, setter, hidden, children }: Props) => {
+const SelectInput = ({
+  title,
+  value,
+  setter,
+  hidden,
+  addButton,
+  children,
+}: Props) => {
   return (
     <div
       className={`${styles.campo} ${hidden ? styles.fadeOut : styles.fadeIn}`}
     >
       <label className={styles.title}>{title}:</label>
-      <select
-        value={value}
-        onChange={
-          setter &&
-          ((e) => {
-            const v = e.target.value;
-            setter(v);
-            e.currentTarget.setCustomValidity("");
-          })
-        }
-      >
-        {children}
-      </select>
+      <div className={styles.selectBox}>
+        <select
+          value={value}
+          onChange={
+            setter &&
+            ((e) => {
+              const v = e.target.value;
+              setter(v);
+              e.currentTarget.setCustomValidity("");
+            })
+          }
+        >
+          {children}
+        </select>
+        {addButton}
+      </div>
     </div>
   );
 };

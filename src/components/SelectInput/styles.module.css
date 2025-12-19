@@ -41,3 +41,10 @@
   max-height: 70px;
   margin-bottom: 6px;
 }
+.selectBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}

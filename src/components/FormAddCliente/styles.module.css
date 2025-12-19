@@ -1,0 +1,86 @@
+.texto {
+  background-color: white;
+  color: #4cbbb6;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 4px;
+  outline: #4cbbb6;
+  border: #4cbbb6 2px solid;
+}
+.inputBox {
+  display: flex;
+  color: #4cbbb6;
+  width: 100%;
+  flex-direction: column;
+  align-items: start;
+  max-height: 70px;
+  overflow: hidden;
+  transition: all 0.5s linear;
+}
+.inputBox label {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.btn {
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid transparent;
+  font-weight: 600;
+  padding: 0.8em 1.2em;
+  font-size: 1.2em;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 2.4px 2.4px 3.2px;
+  background-color: #4cbbb6;
+  color: #f0f0f0;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+  transition: opacity 1000ms linear;
+}
+.btn:hover {
+  padding: 1em 1.2em;
+  transition: padding 100ms linear;
+}
+.btn:disabled {
+  opacity: 0.3;
+  padding: 0.8em 1.2em;
+  cursor: auto;
+}
+.add_cliente_btn {
+  background-image: url(../../assets/addCliente.svg);
+  background-size: 28px;
+  background-position-x: calc(100% - 12px);
+}
+
+.nomesContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+.form {
+  width: 100%;
+}
+.campos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+.separador {
+  border: #4cbbb6 1px solid;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -6,16 +6,12 @@ import success from "../../assets/success.svg";
 import { useSearchParams } from "react-router-dom";
 import getContactMap from "../../services/getContactMap";
 import SelectInput from "../SelectInput";
-import CheckBoxInput from "../CheckBoxInput";
-import postNovoClienteCotacao from "../../services/postNovoClienteCotacao";
+import FormAddCliente from "../FormAddCliente";
+import type { Cliente } from "../../types/Cliente";
+import addcircle from "../../assets/add_circle.svg";
 
 type Props = {
   veicleData: VeicleData;
-};
-
-type Cliente = {
-  ID: string;
-  NOME: string;
 };
 
 const SendForm = ({ veicleData }: Props) => {
@@ -24,10 +20,12 @@ const SendForm = ({ veicleData }: Props) => {
   const token = searchParams.get("token");
   const [deuError, setDeuError] = useState(false);
   const [activeContainer, setActiveContainer] = useState(1);
-  const [nomeCliente, setNomeCliente] = useState("");
   const [idCliente, setIdCliente] = useState("");
+  const [showModal, setShowModal] = useState(true);
   const [listaClientes, setListaClientes] = useState<Cliente[]>([]);
-  const [ehNovoCliente, setEhNovoCliente] = useState(false);
+  const addClient = (novoCliente: Cliente) => {
+    setListaClientes([...listaClientes, novoCliente]);
+  };
   useEffect(() => {
     if (userId && token) {
       getContactMap(userId, token).then((clientes) => {
@@ -40,104 +38,89 @@ const SendForm = ({ veicleData }: Props) => {
   }, [userId, token]);
 
   return (
-    <form className={styles.form}>
-      <div
-        className={`${styles.container} ${
-          activeContainer !== 1 && styles.hidden
-        }`}
-      >
-        <h2>Enviar dados para o Bitrix</h2>
-        <SelectInput
-          title="Selecione um Cliente"
-          setter={setIdCliente}
-          value={idCliente}
-          hidden={ehNovoCliente}
-        >
-          <>
-            <option value="">-</option>
-            {listaClientes.map((value, index) => (
-              <option value={value.ID} key={index}>
-                {value.NOME}
-              </option>
-            ))}
-          </>
-        </SelectInput>
-        <CheckBoxInput
-          name="novo-cliente"
-          checked={ehNovoCliente}
-          setter={setEhNovoCliente}
-          text="Criar novo cliente"
-        />
+    <>
+      <form className={styles.form}>
         <div
-          className={`${styles.inputBox} ${
-            !ehNovoCliente ? styles.hidden : ""
+          className={`${styles.container} ${
+            activeContainer !== 1 && styles.hidden
           }`}
         >
-          <label htmlFor="cliente">Nome do Cliente:</label>
-          <input
-            type="text"
-            className={styles.texto}
-            value={nomeCliente}
-            onChange={(e) => {
-              setNomeCliente(e.target.value);
-            }}
-            name="cliente"
-            placeholder="Cliente"
-          />
-        </div>
-        <span className={styles.errorMessage} hidden={!deuError}>
-          Opa, acesse o link da aplicação via dashboard bitrix ou inclua o ID de
-          usuário e token na URL
-        </span>
-        <hr className={styles.separador} />
-        <button
-          className={`${styles.btn} ${styles.send_btn}`}
-          disabled={
-            !(
-              ((idCliente && !ehNovoCliente) ||
-                (nomeCliente && ehNovoCliente)) &&
-              veicleData.codeFipe &&
-              !deuError
-            )
-          }
-          onClick={(e) => {
-            e.preventDefault();
-            if (!userId || !token) {
-              return;
+          <h2>Enviar dados para o Bitrix</h2>
+          <SelectInput
+            title="Selecione um Cliente"
+            setter={setIdCliente}
+            value={idCliente}
+            addButton={
+              <button
+                className={styles.addBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowModal(true);
+                }}
+              >
+                <img src={addcircle} alt="Adicionar Cliente" />
+              </button>
             }
-            if (idCliente && !ehNovoCliente) {
-              sendData(veicleData, idCliente, userId, token);
-            }
-            if (nomeCliente && ehNovoCliente) {
-              postNovoClienteCotacao(veicleData, nomeCliente, userId, token);
-            }
-            setActiveContainer(2);
-          }}
-        >
-          Enviar Dados
-        </button>
-      </div>
-      <div
-        className={`${styles.container} ${
-          activeContainer !== 2 && styles.hidden
-        }`}
-      >
-        <div className={styles.feedbackBox}>
-          <img className={styles.success} src={success} alt="Sucesso" />
-          <span>Dado Enviado com Sucesso!</span>
+          >
+            <>
+              <option value="">-</option>
+              {listaClientes.map((value, index) => (
+                <option value={value.ID} key={index}>
+                  {value.NOME}
+                </option>
+              ))}
+            </>
+          </SelectInput>
+          <span className={styles.errorMessage} hidden={!deuError}>
+            Opa, acesse o link da aplicação via dashboard bitrix ou inclua o ID
+            de usuário e token na URL
+          </span>
           <hr className={styles.separador} />
           <button
-            className={`${styles.btn} ${styles.return_btn}`}
+            className={`${styles.btn} ${styles.send_btn}`}
+            disabled={!(idCliente && veicleData.codeFipe && !deuError)}
             onClick={(e) => {
               e.preventDefault();
-              setActiveContainer(1);
+              if (!userId || !token) {
+                return;
+              }
+              if (idCliente) {
+                sendData(veicleData, idCliente, userId, token);
+              }
+              setActiveContainer(2);
             }}
           >
-            Voltar
+            Enviar Dados
           </button>
         </div>
-      </div>
-    </form>
+        <div
+          className={`${styles.container} ${
+            activeContainer !== 2 && styles.hidden
+          }`}
+        >
+          <div className={styles.feedbackBox}>
+            <img className={styles.success} src={success} alt="Sucesso" />
+            <span>Dado Enviado com Sucesso!</span>
+            <hr className={styles.separador} />
+            <button
+              className={`${styles.btn} ${styles.return_btn}`}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveContainer(1);
+              }}
+            >
+              Voltar
+            </button>
+          </div>
+        </div>
+      </form>
+      <FormAddCliente
+        show={showModal}
+        setShow={setShowModal}
+        addClient={addClient}
+        setIdCliente={setIdCliente}
+      />
+    </>
   );
 };
 export default SendForm;
