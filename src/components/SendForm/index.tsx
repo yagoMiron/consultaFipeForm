@@ -21,7 +21,7 @@ const SendForm = ({ veicleData }: Props) => {
   const [deuError, setDeuError] = useState(false);
   const [activeContainer, setActiveContainer] = useState(1);
   const [idCliente, setIdCliente] = useState("");
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [listaClientes, setListaClientes] = useState<Cliente[]>([]);
   const addClient = (novoCliente: Cliente) => {
     setListaClientes([...listaClientes, novoCliente]);
