@@ -1,5 +1,4 @@
-import axios, { isAxiosError } from "axios";
-import sendData from "./sendData";
+import axios from "axios";
 import type { ContatoCliente } from "../types/ContatoCliente";
 
 const postCliente = async (

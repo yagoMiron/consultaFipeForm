@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import type { VeicleData } from "../types/VeicleData";
 import sendData from "./sendData";
 
