@@ -5,6 +5,8 @@ import addCliente from "../../assets/addCliente_azul.svg";
 import postCliente from "../../services/postCliente";
 import { useSearchParams } from "react-router-dom";
 import type { Cliente } from "../../types/Cliente";
+import { useMask } from "@react-input/mask";
+import { phoneMask } from "../../controller/Masks";
 
 type Props = {
   show: boolean;
@@ -77,6 +79,7 @@ const FormAddCliente = ({ show, setShow, addClient, setIdCliente }: Props) => {
           <div className={styles.inputBox}>
             <label htmlFor="cliente">Telefone:</label>
             <input
+              ref={useMask(phoneMask)}
               type="text"
               className={styles.texto}
               value={telefone}

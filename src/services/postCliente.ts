@@ -1,6 +1,13 @@
 import axios from "axios";
 import type { ContatoCliente } from "../types/ContatoCliente";
 
+function normalizePhone(phone: string | undefined): string | undefined {
+  if (phone == undefined) {
+    return;
+  }
+  return phone.replace(/\D/g, "");
+}
+
 const postCliente = async (
   data: ContatoCliente,
   userId: string,
@@ -14,7 +21,7 @@ const postCliente = async (
         NAME: data.NAME,
         SECOND_NAME: data.SECOND_NAME,
         LAST_NAME: data.LAST_NAME,
-        PHONE: [{ VALUE: data.PHONE, VALUE_TYPE: "MOBILE" }],
+        PHONE: [{ VALUE: normalizePhone(data.PHONE), VALUE_TYPE: "MOBILE" }],
         EMAIL: [{ VALUE: data.EMAIL, VALUE_TYPE: "WORK" }],
         SOURCE_ID: "WEB",
       },
