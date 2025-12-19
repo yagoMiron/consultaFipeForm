@@ -4,9 +4,18 @@ import styles from "./styles.module.css";
 import sendData from "../../services/sendData";
 import success from "../../assets/success.svg";
 import { useSearchParams } from "react-router-dom";
+import getContactMap from "../../services/getContactMap";
+import SelectInput from "../SelectInput";
+import CheckBoxInput from "../CheckBoxInput";
+import postNovoClienteCotacao from "../../services/postNovoClienteCotacao";
 
 type Props = {
   veicleData: VeicleData;
+};
+
+type Cliente = {
+  ID: string;
+  NOME: string;
 };
 
 const SendForm = ({ veicleData }: Props) => {
@@ -15,13 +24,21 @@ const SendForm = ({ veicleData }: Props) => {
   const token = searchParams.get("token");
   const [deuError, setDeuError] = useState(false);
   const [activeContainer, setActiveContainer] = useState(1);
-  const [cliente, setCliente] = useState("");
+  const [nomeCliente, setNomeCliente] = useState("");
+  const [idCliente, setIdCliente] = useState("");
+  const [listaClientes, setListaClientes] = useState<Cliente[]>([]);
+  const [ehNovoCliente, setEhNovoCliente] = useState(false);
   useEffect(() => {
-    if (!userId || !token) {
+    if (userId && token) {
+      getContactMap(userId, token).then((clientes) => {
+        setListaClientes(clientes);
+      });
+    } else {
       setDeuError(true);
       console.log("Id do usuário ou token não encontrado");
     }
   }, [userId, token]);
+
   return (
     <form className={styles.form}>
       <div
@@ -30,14 +47,39 @@ const SendForm = ({ veicleData }: Props) => {
         }`}
       >
         <h2>Enviar dados para o Bitrix</h2>
-        <div className={styles.inputBox}>
+        <SelectInput
+          title="Selecione um Cliente"
+          setter={setIdCliente}
+          value={idCliente}
+          hidden={ehNovoCliente}
+        >
+          <>
+            <option value="">-</option>
+            {listaClientes.map((value, index) => (
+              <option value={value.ID} key={index}>
+                {value.NOME}
+              </option>
+            ))}
+          </>
+        </SelectInput>
+        <CheckBoxInput
+          name="novo-cliente"
+          checked={ehNovoCliente}
+          setter={setEhNovoCliente}
+          text="Criar novo cliente"
+        />
+        <div
+          className={`${styles.inputBox} ${
+            !ehNovoCliente ? styles.hidden : ""
+          }`}
+        >
           <label htmlFor="cliente">Nome do Cliente:</label>
           <input
             type="text"
             className={styles.texto}
-            value={cliente}
+            value={nomeCliente}
             onChange={(e) => {
-              setCliente(e.target.value);
+              setNomeCliente(e.target.value);
             }}
             name="cliente"
             placeholder="Cliente"
@@ -50,13 +92,26 @@ const SendForm = ({ veicleData }: Props) => {
         <hr className={styles.separador} />
         <button
           className={`${styles.btn} ${styles.send_btn}`}
-          disabled={!(cliente && veicleData.codeFipe && !deuError)}
+          disabled={
+            !(
+              ((idCliente && !ehNovoCliente) ||
+                (nomeCliente && ehNovoCliente)) &&
+              veicleData.codeFipe &&
+              !deuError
+            )
+          }
           onClick={(e) => {
             e.preventDefault();
-            if (cliente && userId && token) {
-              sendData(veicleData, cliente, userId, token);
-              setActiveContainer(2);
+            if (!userId || !token) {
+              return;
             }
+            if (idCliente && !ehNovoCliente) {
+              sendData(veicleData, idCliente, userId, token);
+            }
+            if (nomeCliente && ehNovoCliente) {
+              postNovoClienteCotacao(veicleData, nomeCliente, userId, token);
+            }
+            setActiveContainer(2);
           }}
         >
           Enviar Dados

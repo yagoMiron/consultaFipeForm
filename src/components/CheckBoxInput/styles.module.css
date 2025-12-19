@@ -1,0 +1,9 @@
+.checkboxContainer {
+  display: flex;
+  text-align: start;
+  margin-bottom: 4px;
+  width: 100%;
+}
+.checkboxContainer input[type="checkbox"] {
+  accent-color: #4cbbb6;
+}

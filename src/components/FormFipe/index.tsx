@@ -8,6 +8,7 @@ import getAno from "../../services/getAno";
 import getFipe from "../../services/getFipe";
 import "react-responsive-modal/styles.css";
 import type { VeicleData } from "../../types/VeicleData";
+import CheckBoxInput from "../CheckBoxInput";
 
 type Props = {
   setVeicleData: React.Dispatch<React.SetStateAction<VeicleData>>;
@@ -82,18 +83,12 @@ function FormFipe({ setVeicleData, covered, setActualPage }: Props) {
         />
       </div>
 
-      <div className={styles.checkboxContainer}>
-        <input
-          type="checkbox"
-          className={styles.checkbox}
-          name="sem-placa"
-          checked={semPlaca}
-          onChange={(e) => {
-            setSemPlaca(e.target.checked);
-          }}
-        />
-        <span>Não possuo a placa</span>
-      </div>
+      <CheckBoxInput
+        name="sem-placa"
+        checked={semPlaca}
+        setter={setSemPlaca}
+        text="Não possuo a placa"
+      />
 
       <SelectInput
         title="Tipo"

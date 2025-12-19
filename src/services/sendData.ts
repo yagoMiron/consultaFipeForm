@@ -5,7 +5,7 @@ import { getDealFieldMap } from "./getDealFipeMap";
 
 const sendData = async (
   data: VeicleData,
-  cliente: string,
+  idCliente: string,
   userId: string,
   token: string,
   domain = "loma.bitrix24.com.br"
@@ -14,8 +14,8 @@ const sendData = async (
   try {
     await axios.post(`https://${domain}/rest/${userId}/${token}/crm.deal.add`, {
       fields: {
-        TITLE: `Cotação | ${cliente}`,
-        [fieldMap.CLIENTE]: cliente,
+        TITLE: `Cotação | ${data.brand} ${data.model}`,
+        CONTACT_ID: idCliente,
         [fieldMap.FIPE_VALOR]: data.price,
         [fieldMap.COD_FIPE]: data.codeFipe,
         [fieldMap.VEIC_TIPO]: `${NomeVeiculo[data.vehicleType]}`,

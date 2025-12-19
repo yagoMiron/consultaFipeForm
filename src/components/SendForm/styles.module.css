@@ -93,7 +93,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-height: 300px; /* valor grande o suficiente */
+  max-height: 500px; /* valor grande o suficiente */
   opacity: 1;
   transition: max-height 0.8s ease, opacity 0.5s ease;
 }
