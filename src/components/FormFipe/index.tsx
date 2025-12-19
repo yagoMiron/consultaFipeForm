@@ -101,10 +101,12 @@ function FormFipe({ setVeicleData, covered, setActualPage }: Props) {
         setter={setTipo}
         hidden={!semPlaca}
       >
-        <option value="">-</option>
-        <option value="motorcycles">Motos</option>
-        <option value="cars">Carros</option>
-        <option value="trucks">Caminhão</option>
+        <>
+          <option value="">-</option>
+          <option value="motorcycles">Motos</option>
+          <option value="cars">Carros</option>
+          <option value="trucks">Caminhão</option>
+        </>
       </SelectInput>
 
       <SelectInput
@@ -113,12 +115,14 @@ function FormFipe({ setVeicleData, covered, setActualPage }: Props) {
         setter={setMarca}
         hidden={!semPlaca || !tipo}
       >
-        <option value="">-</option>
-        {listaMarcas.map((value, index) => (
-          <option value={value.code} key={index}>
-            {value.name}
-          </option>
-        ))}
+        <>
+          <option value="">-</option>
+          {listaMarcas.map((value, index) => (
+            <option value={value.code} key={index}>
+              {value.name}
+            </option>
+          ))}
+        </>
       </SelectInput>
 
       <SelectInput
@@ -127,12 +131,14 @@ function FormFipe({ setVeicleData, covered, setActualPage }: Props) {
         setter={setModelo}
         hidden={!marca || !tipo || !semPlaca}
       >
-        <option value="">-</option>
-        {listaModelos.map((value, index) => (
-          <option value={value.code} key={index}>
-            {value.name}
-          </option>
-        ))}
+        <>
+          <option value="">-</option>
+          {listaModelos.map((value, index) => (
+            <option value={value.code} key={index}>
+              {value.name}
+            </option>
+          ))}
+        </>
       </SelectInput>
 
       <SelectInput
@@ -141,12 +147,14 @@ function FormFipe({ setVeicleData, covered, setActualPage }: Props) {
         setter={setAno}
         hidden={!modelo || !marca || !tipo || !semPlaca}
       >
-        <option value="">-</option>
-        {listaAnos.map((value, index) => (
-          <option value={value.code} key={index}>
-            {value.name}
-          </option>
-        ))}
+        <>
+          <option value="">-</option>
+          {listaAnos.map((value, index) => (
+            <option value={value.code} key={index}>
+              {value.name}
+            </option>
+          ))}
+        </>
       </SelectInput>
 
       <hr className={styles.separador} />

@@ -16,13 +16,12 @@ const SendForm = ({ veicleData }: Props) => {
   const [deuError, setDeuError] = useState(false);
   const [activeContainer, setActiveContainer] = useState(1);
   const [cliente, setCliente] = useState("");
-  useEffect(()=> {
+  useEffect(() => {
     if (!userId || !token) {
-      setDeuError(true)
+      setDeuError(true);
       console.log("Id do usuário ou token não encontrado");
-      
     }
-  },[])
+  }, [userId, token]);
   return (
     <form className={styles.form}>
       <div

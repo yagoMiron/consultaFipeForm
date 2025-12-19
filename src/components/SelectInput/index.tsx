@@ -1,11 +1,12 @@
+import type { ReactElement } from "react";
 import styles from "./styles.module.css";
 
 type Props = {
   title: string;
-  value: any;
-  setter?: Function;
+  value: string;
+  setter?: React.Dispatch<React.SetStateAction<string>>;
   hidden: boolean;
-  children: any;
+  children: ReactElement;
 };
 
 const SelectInput = ({ title, value, setter, hidden, children }: Props) => {
