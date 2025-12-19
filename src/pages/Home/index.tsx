@@ -8,7 +8,6 @@ import type { VeicleData } from "../../types/VeicleData";
 import ResultTable from "../../components/ResultTable";
 import ErrorMessage from "../../components/ErrorMessage";
 import SendForm from "../../components/SendForm";
-import { useSearchParams } from "react-router-dom";
 
 function Home() {
   const [actualPage, setActualPage] = useState(1);

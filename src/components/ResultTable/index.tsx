@@ -11,7 +11,7 @@ const ResultTable = ({ veicleData, covered, setActualPage }: Props) => {
   const rows = [
     { label: "Código FIPE", value: veicleData.codeFipe },
     { label: "Preço", value: veicleData.price },
-    { label: "Tipo de veículo", value: NomeVeiculo[veicleData.vehicleType+1] },
+    { label: "Tipo de veículo", value: NomeVeiculo[veicleData.vehicleType] },
     { label: "Marca", value: veicleData.brand },
     { label: "Modelo", value: veicleData.model },
     { label: "Ano do modelo", value: veicleData.modelYear },

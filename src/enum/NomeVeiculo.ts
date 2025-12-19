@@ -1,4 +1,4 @@
-export const NomeVeiculo = [
+export const NomeVeiculo = ["",
     "Carro",
     "Moto",
     "Caminhão",

@@ -44,7 +44,7 @@ const SendForm = ({ veicleData }: Props) => {
             placeholder="Cliente"
           />
         </div>
-        <span className={styles.errorMessage}>
+        <span className={styles.errorMessage} hidden={!deuError}>
           Opa, acesse o link da aplicação via dashboard bitrix ou inclua o ID de
           usuário e token na URL
         </span>

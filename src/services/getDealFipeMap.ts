@@ -1,43 +1,43 @@
 import axios from "axios";
+import type { CampoBitrix } from "../types/CampoBitrix";
+import type { DealFieldMap } from "../types/DealFieldMap";
+import { LABEL_TO_KEY } from "../constants/LABEL_TO_KEY";
 
-type FieldMap = Record<string, string>;
-
-type BitrixField = {
-  TITLE?: string;
-  LIST_LABEL?: string;
-};
+function fieldsObjectToArray(
+  fields: Record<string, CampoBitrix>
+): CampoBitrix[] {
+  return Object.values(fields);
+}
 
 export async function getDealFieldMap(
   userId: string,
   token: string,
   domain = "loma.bitrix24.com.br"
-): Promise<FieldMap> {
+): Promise<DealFieldMap> {
   const url = `https://${domain}/rest/${userId}/${token}/crm.deal.fields`;
 
   const response = await axios.get(url);
-  const fields = response.data.result as Record<string, BitrixField>;
+  const fieldsObject = response.data.result as Record<string, CampoBitrix>;
+  const fieldsArray = fieldsObjectToArray(fieldsObject);
 
-  // labels esperados → chave interna sua
-  const labelMap: Record<string, string> = {
-    Placa: "PLACA",
-    "Código FIPE": "COD_FIPE",
-    Marca: "MARCA",
-    Modelo: "MODELO",
-    Ano: "ANO",
-    "Valor FIPE": "VALOR_FIPE",
-    "Referência FIPE": "REF_FIPE",
-    Cliente: "CLIENTE",
-    "Tipo do Veículo": "TIPO_VEIC",
-  };
+  const fieldMap = {} as DealFieldMap;
 
-  const fieldMap: FieldMap = {};
-
-  for (const [fieldCode, fieldData] of Object.entries(fields)) {
-    const label = fieldData.TITLE || fieldData.LIST_LABEL;
-
-    if (label && labelMap[label]) {
-      fieldMap[labelMap[label]] = fieldCode;
+  for (const campo of fieldsArray) {
+    const key = LABEL_TO_KEY[campo.formLabel];
+    if (key) {
+      fieldMap[key] = campo.title;
     }
+  }
+
+  // 🔒 validação forte (opcional, mas recomendada)
+  const missingFields = Object.values(LABEL_TO_KEY).filter(
+    (key) => !fieldMap[key]
+  );
+
+  if (missingFields.length > 0) {
+    console.log(
+      `Campos ausentes no Bitrix: ${missingFields.join(", ")}`
+    );
   }
 
   return fieldMap;
