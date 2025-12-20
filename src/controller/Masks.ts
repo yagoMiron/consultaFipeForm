@@ -9,7 +9,7 @@ export const phoneMask: MaskOptions = {
     const numbers = data.value.replace(/\D/g, "");
 
     return {
-      mask: numbers.length > 10 ? "(##) #####-####" : "(##) ####-####",
+      mask: numbers.length >= 10 ? "(##) #####-####" : "(##) ####-####",
     };
   },
 };

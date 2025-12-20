@@ -18,7 +18,6 @@ const SendForm = ({ veicleData }: Props) => {
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
-  const [deuError, setDeuError] = useState(false);
   const [activeContainer, setActiveContainer] = useState(1);
   const [idCliente, setIdCliente] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +31,6 @@ const SendForm = ({ veicleData }: Props) => {
         setListaClientes(clientes);
       });
     } else {
-      setDeuError(true);
       console.log("Id do usuário ou token não encontrado");
     }
   }, [userId, token]);
@@ -71,14 +69,14 @@ const SendForm = ({ veicleData }: Props) => {
               ))}
             </>
           </SelectInput>
-          <span className={styles.errorMessage} hidden={!deuError}>
+          <span className={styles.errorMessage} hidden={!userId || !token}>
             Opa, acesse o link da aplicação via dashboard bitrix ou inclua o ID
             de usuário e token na URL
           </span>
           <hr className={styles.separador} />
           <button
             className={`${styles.btn} ${styles.send_btn}`}
-            disabled={!(idCliente && veicleData.codeFipe && !deuError)}
+            disabled={!(idCliente && veicleData.codeFipe && userId && token)}
             onClick={(e) => {
               e.preventDefault();
               if (!userId || !token) {

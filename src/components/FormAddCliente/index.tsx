@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import type { Cliente } from "../../types/Cliente";
 import { useMask } from "@react-input/mask";
 import { phoneMask } from "../../controller/Masks";
+import TextInput from "../TextInput";
 
 type Props = {
   show: boolean;
@@ -34,75 +35,45 @@ const FormAddCliente = ({ show, setShow, addClient, setIdCliente }: Props) => {
       <form action="" className={styles.form}>
         <div className={styles.campos}>
           <div className={styles.nomesContainer}>
-            <div className={styles.inputBox}>
-              <label htmlFor="cliente">Nome: *</label>
-              <input
-                type="text"
-                required
-                className={styles.texto}
-                value={nome}
-                onChange={(e) => {
-                  setNome(e.target.value);
-                }}
-                name="nome"
-                placeholder="Nome"
-              />
-            </div>
-            <div className={styles.inputBox}>
-              <label htmlFor="cliente">Sobrenome:</label>
-              <input
-                type="text"
-                className={styles.texto}
-                value={sobreNome}
-                onChange={(e) => {
-                  setSobreNome(e.target.value);
-                }}
-                name="sobrenome"
-                placeholder="Sobrenome"
-              />
-            </div>
-            <div className={styles.inputBox}>
-              <label htmlFor="cliente">Ultimo Nome:</label>
-              <input
-                type="text"
-                className={styles.texto}
-                value={ultimoNome}
-                onChange={(e) => {
-                  setUltimoNome(e.target.value);
-                }}
-                name="ultimoNome"
-                placeholder="Ultimo Nome"
-              />
-            </div>
-          </div>
-
-          <div className={styles.inputBox}>
-            <label htmlFor="cliente">Telefone:</label>
-            <input
-              ref={useMask(phoneMask)}
-              type="text"
-              className={styles.texto}
-              value={telefone}
-              onChange={(e) => {
-                setTelefone(e.target.value);
-              }}
-              name="telefone"
-              placeholder="(00) 00000-0000"
+            <TextInput
+              placeholder="Nome"
+              setter={setNome}
+              title="Nome: "
+              value={nome}
+              required
+              nome="nome"
+            />
+            <TextInput
+              nome="sobrenome"
+              placeholder="Sobrenome"
+              setter={setSobreNome}
+              title="Sobrenome:"
+              value={sobreNome}
+            />
+            <TextInput
+              nome="ultimoNome"
+              placeholder="Último Nome"
+              setter={setUltimoNome}
+              title="Último Nome:"
+              value={ultimoNome}
             />
           </div>
-          <div className={styles.inputBox}>
-            <label htmlFor="cliente">Email:</label>
-            <input
-              type="email"
-              className={styles.texto}
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              name="email"
-              placeholder="seu@email.com"
-            />
-          </div>
+          <TextInput
+            nome="telefone"
+            placeholder="(00) 00000-0000"
+            setter={setTelefone}
+            title="Telefone:"
+            value={telefone}
+            mask={useMask(phoneMask)}
+          />
+          <TextInput
+            nome="email"
+            placeholder="seu@email.com"
+            setter={setEmail}
+            title="Email:"
+            value={email}
+            type="email"
+          />
         </div>
         <hr className={styles.separador} />
         <button
