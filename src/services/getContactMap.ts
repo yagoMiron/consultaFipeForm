@@ -6,8 +6,9 @@ const getContactMap = async (
   token: string,
   domain = "loma.bitrix24.com.br"
 ) => {
-  const url = `https://${domain}/rest/${userId}/${token}/crm.contact.list`;
-  const response = await axios.get(url);
+  const response = await axios.get(
+    `https://${domain}/rest/${userId}/${token}/crm.contact.list`
+  );
   const result = response.data.result;
   const contactMap = result.map((contact: ContatoBitrix) => ({
     ID: contact.ID,
