@@ -69,7 +69,7 @@ const SendForm = ({ veicleData }: Props) => {
               ))}
             </>
           </SelectInput>
-          <span className={styles.errorMessage} hidden={!userId || !token}>
+          <span className={styles.errorMessage} hidden={!(!userId || !token)}>
             Opa, acesse o link da aplicação via dashboard bitrix ou inclua o ID
             de usuário e token na URL
           </span>
