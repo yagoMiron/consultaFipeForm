@@ -7,6 +7,8 @@ declare global {
 export function initBitrix(): Promise<void> {
   return new Promise((resolve) => {
     if (!window.BX24) {
+      console.log();
+
       console.error("BX24 não está disponível");
       return;
     }
